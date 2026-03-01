@@ -1,283 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Milk & Mel 🐝</title>
-
-<style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#f7f7f7;
-}
-
-header{
-  background:#ffcc00;
-  padding:20px;
-  text-align:center;
-  font-size:24px;
-  font-weight:bold;
-}
-
-.container{
-  padding:15px;
-}
-
-.card{
-  background:white;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-button{
-  background:#ffcc00;
-  border:none;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-button:disabled{
-  background:#ccc;
-  cursor:not-allowed;
-}
-
-#cart{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:white;
-  padding:15px;
-  border-top:2px solid #ffcc00;
-  display:none;
-  max-height:80vh;
-  overflow:auto;
-}
-
-.modal{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  bottom:0;
-  background:rgba(0,0,0,0.5);
-  display:none;
-  align-items:center;
-  justify-content:center;
-}
-
-.modal-content{
-  background:white;
-  padding:20px;
-  width:90%;
-  max-height:80vh;
-  overflow:auto;
-  border-radius:10px;
-}
-input{
-  width:100%;
-  padding:8px;
-  margin-bottom:10px;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Restaurante Milk & Mel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<header>Milk & Mel 🐝</header>
 
 <div class="container">
 
-<div class="card">
-<h3>Quentinha P - R$ 18,00</h3>
-<button onclick="abrirQuentinha('P')">Selecionar</button>
+    <div class="header">
+        <h1>Restaurante Milk & Mel</h1>
+        <p class="horario">Funcionamento: 11:00 às 15:30</p>
+        <div class="status">Estamos Fechados</div>
+    </div>
+
+    <div class="card">
+
+        <h2>Monte sua quentinha</h2>
+
+        <div class="opcao">
+            <h3>Quentinha P</h3>
+            <p>1 carne + 3 acompanhamentos</p>
+            <span>R$ 18,00</span>
+        </div>
+
+        <div class="opcao">
+            <h3>Quentinha G</h3>
+            <p>2 carnes + 3 acompanhamentos</p>
+            <span>R$ 22,00</span>
+        </div>
+
+        <button class="btn">Adicionar à sacola</button>
+
+    </div>
+
 </div>
-
-<div class="card">
-<h3>Quentinha G - R$ 22,00</h3>
-<button onclick="abrirQuentinha('G')">Selecionar</button>
-</div>
-
-</div>
-
-<div id="cart">
-<h3>Sacola</h3>
-<div id="cartItems"></div>
-<p><strong>Total: R$ <span id="total">0</span></strong></p>
-
-<h4>Seus Dados</h4>
-<input id="nome" placeholder="Nome completo" oninput="validarCheckout()">
-<input id="telefone" placeholder="Telefone" oninput="validarCheckout()">
-<input id="endereco" placeholder="Endereço" oninput="validarCheckout()">
-
-<h4>Forma de Pagamento</h4>
-<select id="pagamento" onchange="validarCheckout()">
-<option value="">Escolha</option>
-<option>Pix</option>
-<option>Dinheiro</option>
-<option>Cartão Crédito</option>
-<option>Cartão Débito</option>
-<option>Apple Pay</option>
-</select>
-
-<br><br>
-<button id="finalizar" disabled onclick="finalizarPedido()">Finalizar Pedido</button>
-<button onclick="fecharCarrinho()">Fechar</button>
-</div>
-
-<div id="modal" class="modal">
-<div class="modal-content">
-<h3 id="tituloModal"></h3>
-
-<h4>Carnes</h4>
-<div id="carnes"></div>
-
-<h4>Acompanhamentos (mínimo 3)</h4>
-<div id="acomp"></div>
-
-<br>
-<button onclick="confirmar()">Adicionar</button>
-<button onclick="fecharModal()">Cancelar</button>
-</div>
-</div>
-
-<script>
-
-let cart = [];
-let total = 0;
-let limiteCarnes = 1;
-let tipoAtual = "";
-
-const carnesLista = [
-"Filé de Frango Empanado",
-"Frango Assado",
-"Carré Acebolado",
-"Lasanha à Bolonhesa",
-"Estrogonofe de Frango",
-"Linguiça"
-];
-
-const acompLista = [
-"Feijão Preto",
-"Feijão Mulatinho",
-"Arroz Branco",
-"Arroz Integral",
-"Macarrão",
-"Batata Frita",
-"Farofa",
-"Feijoada",
-"Farofa de Cuscuz",
-"Feijão Tropeiro",
-"Couve Mineira"
-];
-
-function abrirQuentinha(tipo){
-tipoAtual = tipo;
-limiteCarnes = tipo==="P"?1:2;
-
-document.getElementById("tituloModal").innerText =
-tipo==="P"?"Quentinha P - R$18":"Quentinha G - R$22";
-
-renderizar();
-document.getElementById("modal").style.display="flex";
-}
-
-function fecharModal(){
-document.getElementById("modal").style.display="none";
-}
-
-function renderizar(){
-let carnesHTML="";
-carnesLista.forEach(c=>{
-carnesHTML+=`<label><input type="checkbox" class="carne" value="${c}"> ${c}</label><br>`;
-});
-document.getElementById("carnes").innerHTML=carnesHTML;
-
-let acompHTML="";
-acompLista.forEach(a=>{
-acompHTML+=`<label><input type="checkbox" class="acomp" value="${a}"> ${a}</label><br>`;
-});
-document.getElementById("acomp").innerHTML=acompHTML;
-}
-
-function confirmar(){
-let carnesSel=document.querySelectorAll(".carne:checked");
-let acompSel=document.querySelectorAll(".acomp:checked");
-
-if(acompSel.length<3){
-alert("Escolha pelo menos 3 acompanhamentos");
-return;
-}
-
-let preco=tipoAtual==="P"?18:22;
-
-if(carnesSel.length>limiteCarnes){
-preco+= (carnesSel.length-limiteCarnes)*8;
-}
-
-let desc=`Quentinha ${tipoAtual}\n`;
-
-carnesSel.forEach(c=>desc+=`Carne: ${c.value}\n`);
-acompSel.forEach(a=>desc+=`Acomp: ${a.value}\n`);
-
-cart.push({desc,preco});
-total+=preco;
-
-atualizarCarrinho();
-fecharModal();
-}
-
-function atualizarCarrinho(){
-let html="";
-cart.forEach(i=>{
-html+=`<p>${i.desc.replace(/\n/g,"<br>")} - R$ ${i.preco}</p><hr>`;
-});
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerText=total;
-document.getElementById("cart").style.display="block";
-}
-
-function fecharCarrinho(){
-document.getElementById("cart").style.display="none";
-}
-
-function validarCheckout(){
-let nome=document.getElementById("nome").value;
-let tel=document.getElementById("telefone").value;
-let end=document.getElementById("endereco").value;
-let pag=document.getElementById("pagamento").value;
-
-document.getElementById("finalizar").disabled =
-!(nome && tel && end && pag && cart.length>0);
-}
-
-function finalizarPedido(){
-
-let numeroPedido=Math.floor(Math.random()*10000);
-
-let msg=`Pedido #${numeroPedido}\n\n`;
-
-cart.forEach(i=>{
-msg+=`${i.desc}\nR$ ${i.preco}\n\n`;
-});
-
-msg+=`Total: R$ ${total}\n\n`;
-msg+=`Nome: ${nome.value}\n`;
-msg+=`Telefone: ${telefone.value}\n`;
-msg+=`Endereço: ${endereco.value}\n`;
-msg+=`Pagamento: ${pagamento.value}`;
-
-let url=`https://wa.me/5521967699911?text=${encodeURIComponent(msg)}`;
-
-window.open(url,"_blank");
-}
-
-</script>
 
 </body>
-</html>
+</html

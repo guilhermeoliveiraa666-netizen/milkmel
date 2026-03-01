@@ -1,261 +1,76 @@
-let cart = [];
-let total = 0;
-let selectedDelivery = "";
-let selectedPayment = "";
-let orderNumber = localStorage.getItem("orderNumber")
-  ? parseInt(localStorage.getItem("orderNumber"))
-  : 1;
+// ===== CONFIGURAÇÃO =====
 
-// ===== ADICIONAR AO CARRINHO =====
-function addToCart(name, price) {
-  cart.push({ name, price });
-  total += price;
+// COLOCA TRUE PRA FORÇAR ABERTO
+const admin = true;
 
-  updateCart();
+// Horário normal
+const horaAbertura = 11;
+const minutoAbertura = 0;
+
+const horaFechamento = 15;
+const minutoFechamento = 30;
+
+
+// ===== FUNÇÃO HORÁRIO =====
+
+function verificarHorario() {
+
+    const statusDiv = document.querySelector(".status");
+    const botao = document.querySelector(".btn");
+
+    // SE FOR ADMIN → SEMPRE ABERTO
+    if (admin === true) {
+        statusDiv.textContent = "Modo ADMIN - Sempre Aberto";
+        statusDiv.style.background = "#e8fff5";
+        statusDiv.style.color = "#00a86b";
+        botao.disabled = false;
+        botao.style.opacity = "1";
+        return;
+    }
+
+    const agora = new Date();
+    const horaAtual = agora.getHours();
+    const minutoAtual = agora.getMinutes();
+
+    const aberto =
+        (horaAtual > horaAbertura || 
+        (horaAtual === horaAbertura && minutoAtual >= minutoAbertura)) &&
+        (horaAtual < horaFechamento || 
+        (horaAtual === horaFechamento && minutoAtual <= minutoFechamento));
+
+    if (aberto) {
+        statusDiv.textContent = "Estamos Abertos";
+        statusDiv.style.background = "#e8fff5";
+        statusDiv.style.color = "#00a86b";
+        botao.disabled = false;
+        botao.style.opacity = "1";
+    } else {
+        statusDiv.textContent = "Estamos Fechados";
+        statusDiv.style.background = "#ffe6e6";
+        statusDiv.style.color = "#c0392b";
+        botao.disabled = true;
+        botao.style.opacity = "0.6";
+    }
 }
 
-// ===== ATUALIZAR CARRINHO =====
-function updateCart() {
-  const cartItems = document.getElementById("cartItems");
-  const cartCount = document.getElementById("cartCount");
-  const totalSpan = document.getElementById("total");
-function fecharCarrinho() {
-  document.getElementById("cart").classList.remove("active");
-}
-  cartItems.innerHTML = "";
 
-  cart.forEach((item, index) => {
-    cartItems.innerHTML += `
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-        <span>${item.name}</span>
-        <span>R$ ${item.price}</span>
-      </div>
-    `;
-  });
+// ===== INICIAR =====
 
-  cartCount.innerText = cart.length;
-  totalSpan.innerText = total.toFixed(2);
+document.addEventListener("DOMContentLoaded", function () {
 
-  if (cart.length > 0) {
-    document.getElementById("cart").classList.add("active");
-  }
-}
+    verificarHorario();
+    setInterval(verificarHorario, 60000);
 
-// ===== ABRIR CHECKOUT =====
-function openCheckout() {
-  document.getElementById("checkout").classList.add("active");
-}
+    const botao = document.querySelector(".btn");
 
-// ===== ESCOLHER ENTREGA =====
-function selectDelivery(type) {
-  selectedDelivery = type;
+    botao.addEventListener("click", function () {
 
-  document
-    .querySelectorAll(".delivery-options button")
-    .forEach(btn => btn.classList.remove("selected"));
+        if (botao.disabled) {
+            alert("Estamos fechados! Funcionamos das 11:00 às 15:30.");
+        } else {
+            alert("Pedido adicionado com sucesso!");
+        }
 
-  event.target.classList.add("selected");
+    });
 
-  validateForm();
-}
-
-// ===== ESCOLHER PAGAMENTO =====
-function selectPayment(type) {
-  selectedPayment = type;
-
-  document
-    .querySelectorAll(".payment-options button")
-    .forEach(btn => btn.classList.remove("selected"));
-
-  event.target.classList.add("selected");
-
-  validateForm();
-}
-
-// ===== VALIDAÇÃO =====
-document.getElementById("name").addEventListener("input", saveUser);
-document.getElementById("phone").addEventListener("input", saveUser);
-document.getElementById("address").addEventListener("input", validateForm);
-
-function saveUser() {
-  localStorage.setItem("userName", document.getElementById("name").value);
-  localStorage.setItem("userPhone", document.getElementById("phone").value);
-  validateForm();
-}
-
-// Carregar dados salvos
-window.onload = function () {
-  const savedName = localStorage.getItem("userName");
-  const savedPhone = localStorage.getItem("userPhone");
-
-  if (savedName) document.getElementById("name").value = savedName;
-  if (savedPhone) document.getElementById("phone").value = savedPhone;
-};
-
-function validateForm() {
-  const name = document.getElementById("name").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const confirmBtn = document.getElementById("confirmButton");
-
-  if (
-    name !== "" &&
-    phone !== "" &&
-    selectedDelivery !== "" &&
-    selectedPayment !== "" &&
-    (selectedDelivery === "Retirada" || address !== "")
-  ) {
-    confirmBtn.classList.add("active");
-    confirmBtn.disabled = false;
-  } else {
-    confirmBtn.classList.remove("active");
-    confirmBtn.disabled = true;
-  }
-}
-
-// ===== CONFIRMAR PEDIDO =====
-function confirmOrder() {
-  orderNumber++;
-  localStorage.setItem("orderNumber", orderNumber);
-
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const address = document.getElementById("address").value;
-
-  let itemsText = "";
-  cart.forEach(item => {
-    itemsText += `- ${item.name} (R$ ${item.price})\n`;
-  });
-
-  const message = `
-🧾 Pedido Nº ${orderNumber}
-🐝 Milk & Mel
-
-Nome: ${name}
-Telefone: ${phone}
-Entrega: ${selectedDelivery}
-Endereço: ${address || "Retirada no local"}
-Pagamento: ${selectedPayment}
-
-Itens:
-${itemsText}
-
-Total: R$ ${total.toFixed(2)}
-`;
-
-  const encodedMessage = encodeURIComponent(message);
-
-  // ===== WHATSAPP =====
-  window.open(`https://wa.me/55SEUNUMEROAQUI?text=${encodedMessage}`);
-
-  // ===== RESETAR CARRINHO =====
-  cart = [];
-  total = 0;
-  updateCart();
-  alert("Pedido enviado com sucesso!");
-}const carnesLista = [
-  "Filé de Frango Empanado",
-  "Frango Assado",
-  "Carré Acebolado",
-  "Lasanha à Bolonhesa",
-  "Estrogonofe de Frango",
-  "Linguiça"
-];
-
-const acompanhamentosLista = [
-  "Feijão Preto",
-  "Feijão Mulatinho",
-  "Arroz Branco",
-  "Arroz Integral",
-  "Macarrão",
-  "Batata Frita",
-  "Farofa",
-  "Feijoada",
-  "Farofa de Cuscuz",
-  "Feijão Tropeiro",
-  "Couve Mineira"
-];
-
-let tipoAtual = "";
-let limiteCarnes = 1;
-
-function abrirQuentinha(tipo) {
-  tipoAtual = tipo;
-
-  if (tipo === "P") {
-    limiteCarnes = 1;
-    document.getElementById("tipoQuentinha").innerText =
-      "QUENTINHA P - R$ 18,00";
-  } else {
-    limiteCarnes = 2;
-    document.getElementById("tipoQuentinha").innerText =
-      "QUENTINHA G - R$ 22,00";
-  }
-
-  renderizarOpcoes();
-  document.getElementById("modalQuentinha").style.display = "flex";
-}
-
-function fecharModal() {
-  document.getElementById("modalQuentinha").style.display = "none";
-}
-
-function renderizarOpcoes() {
-  const carnesDiv = document.getElementById("carnes");
-  const acompDiv = document.getElementById("acompanhamentos");
-
-  carnesDiv.innerHTML = "";
-  acompDiv.innerHTML = "";
-
-  carnesLista.forEach(item => {
-    carnesDiv.innerHTML += `
-      <label>
-        <input type="checkbox" class="carne" value="${item}">
-        ${item}
-      </label><br>
-    `;
-  });
-
-  acompanhamentosLista.forEach(item => {
-    acompDiv.innerHTML += `
-      <label>
-        <input type="checkbox" class="acomp" value="${item}">
-        ${item}
-      </label><br>
-    `;
-  });
-}
-
-function confirmarQuentinha() {
-  const carnesSelecionadas = document.querySelectorAll(".carne:checked");
-  const acompanhamentosSelecionados =
-    document.querySelectorAll(".acomp:checked");
-
-  if (acompanhamentosSelecionados.length < 3) {
-    alert("Escolha pelo menos 3 acompanhamentos");
-    return;
-  }
-
-  let preco = tipoAtual === "P" ? 18 : 22;
-
-  if (carnesSelecionadas.length > limiteCarnes) {
-    const extras = carnesSelecionadas.length - limiteCarnes;
-    preco += extras * 8;
-  }
-
-  let descricao = `Quentinha ${tipoAtual}\n`;
-
-  carnesSelecionadas.forEach(c => {
-    descricao += `Carne: ${c.value}\n`;
-  });
-
-  acompanhamentosSelecionados.forEach(a => {
-    descricao += `Acomp: ${a.value}\n`;
-  });
-
-  cart.push({ name: descricao, price: preco });
-  total += preco;
-
-  updateCart();
-  fecharModal();
-}
+});
