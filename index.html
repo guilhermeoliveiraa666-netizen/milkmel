@@ -1,42 +1,143 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Restaurante Milk & Mel</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Restaurante Milk & Mel</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="container">
+<header class="topo">
+<h1>Restaurante Milk & Mel</h1>
+</header>
 
-    <div class="header">
-        <h1>Restaurante Milk & Mel</h1>
-        <p class="horario">Funcionamento: 11:00 às 15:30</p>
-        <div class="status">Estamos Fechados</div>
-    </div>
+<main>
 
-    <div class="card">
+<!-- INICIO -->
+<section id="telaInicial" class="tela ativa">
 
-        <h2>Monte sua quentinha</h2>
+<h2>Escolha sua quentinha</h2>
 
-        <div class="opcao">
-            <h3>Quentinha P</h3>
-            <p>1 carne + 3 acompanhamentos</p>
-            <span>R$ 18,00</span>
-        </div>
-
-        <div class="opcao">
-            <h3>Quentinha G</h3>
-            <p>2 carnes + 3 acompanhamentos</p>
-            <span>R$ 22,00</span>
-        </div>
-
-        <button class="btn">Adicionar à sacola</button>
-
-    </div>
-
+<div class="grid">
+<div class="card" onclick="abrirMontagem('P')">
+<h3>Quentinha P</h3>
+<p>Ideal para 1 pessoa</p>
+<strong>R$ 18,00</strong>
 </div>
 
+<div class="card" onclick="abrirMontagem('G')">
+<h3>Quentinha G</h3>
+<p>Fome grande 😄</p>
+<strong>R$ 22,00</strong>
+</div>
+</div>
+
+</section>
+
+<!-- MONTAGEM -->
+<section id="telaMontagem" class="tela">
+
+<h2>Monte sua quentinha</h2>
+
+<div id="carnes"></div>
+
+<h3>Saladas</h3>
+<div id="saladas"></div>
+
+<h3>Extras</h3>
+
+<label class="check">
+<input type="checkbox" id="ovo">
+<span>Ovo + R$3</span>
+</label>
+
+<div class="contador">
+<button onclick="alterarCarneExtra(-1)">−</button>
+<span id="qtdExtra">0</span>
+<button onclick="alterarCarneExtra(1)">+</button>
+</div>
+
+<button class="principal" onclick="adicionarSacola()">
+Adicionar à sacola
+</button>
+
+</section>
+
+<!-- SACOLA -->
+<section id="telaSacola" class="tela">
+
+<h2>Sua Sacola</h2>
+
+<div id="itensSacola"></div>
+
+<h3 id="total"></h3>
+
+<button class="secundario" onclick="voltarMenu()">Adicionar mais itens</button>
+<button class="principal" onclick="abrirCadastro()">Avançar</button>
+
+</section>
+
+<!-- CADASTRO -->
+<section id="telaCadastro" class="tela">
+
+<h2>Seus dados</h2>
+
+<input id="nome" placeholder="Seu nome">
+<input id="telefone" placeholder="Celular">
+
+<button class="principal" onclick="salvarCliente()">Continuar</button>
+
+</section>
+
+<!-- ENDEREÇO -->
+<section id="telaEndereco" class="tela">
+
+<h2>Endereço</h2>
+
+<input id="rua" placeholder="Rua">
+<input id="numero" placeholder="Número">
+<input id="bairro" placeholder="Bairro">
+<input id="referencia" placeholder="Referência">
+
+<button class="principal" onclick="salvarEndereco()">Continuar</button>
+
+</section>
+
+<!-- PAGAMENTO -->
+<section id="telaPagamento" class="tela">
+
+<h2>Pagamento</h2>
+
+<label class="check">
+<input type="radio" name="pg" value="Pix"> Pix
+</label>
+
+<label class="check">
+<input type="radio" name="pg" value="Cartão"> Cartão
+</label>
+
+<label class="check">
+<input type="radio" name="pg" value="Dinheiro" onchange="mostrarTroco(this)">
+Dinheiro
+</label>
+
+<div id="trocoArea" class="troco">
+<input id="troco" placeholder="Troco para quanto?">
+</div>
+
+<button class="principal" onclick="finalizarPedido()">
+Finalizar Pedido
+</button>
+
+</section>
+
+</main>
+
+<script src="script.js"></script>
 </body>
-</html
+</html>
