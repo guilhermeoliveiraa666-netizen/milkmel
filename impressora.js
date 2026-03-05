@@ -1,20 +1,26 @@
-const { ThermalPrinter, PrinterTypes } = require("node-thermal-printer");async function imprimirPedido(pedido) {
+const { ThermalPrinter, PrinterTypes } = require("node-thermal-printer");
+
+async function imprimirPedido(pedido) {
 
   const printer = new ThermalPrinter({
     type: PrinterTypes.EPSON,
-    interface: "printer:auto",
+    interface: "printer:KP-IM602", // Nome exato confirmado
     options: { timeout: 5000 }
   });
 
-  const conectado = await printer.isPrinterConnected();
-
+  // Fallback automático se o nome exato não for reconhecido
+  let conectado = await printer.isPrinterConnected();
   if (!conectado) {
-    console.log("Impressora nao encontrada");
-    return;
+    console.log("Não achou a KP-IM602, tentando printer:auto...");
+    printer.interface = "printer:auto";
+    conectado = await printer.isPrinterConnected();
+    if (!conectado) {
+      console.log("Impressora realmente não encontrada");
+      return;
+    }
   }
 
   try {
-
     printer.alignCenter();
     printer.println("BRENDI LANCHES");
     printer.println("--------------------------------");

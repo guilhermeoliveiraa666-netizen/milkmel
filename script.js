@@ -1,190 +1,263 @@
-let tipoQuentinha="";
-let carneExtra=0;
-let sacola=[];
+/* ===================================================
+   CONFIGURAÇÃO GLOBAL
+=================================================== */
 
-const carnesLista=[
+let tipoQuentinha = "";
+let sacola = [];
+
+const PRECO_P = 18;
+const PRECO_G = 22;
+const PRECO_CARNE_EXTRA = 8;
+const PRECO_OVO = 3;
+
+/* ===================================================
+   LISTAS
+=================================================== */
+
+const carnesLista = [
 "Filé de Frango Empanado","Frango Assado","Carré Acebolado",
 "Lasanha à Bolonhesa","Estrogonofe de Frango",
 "Linguiça Toscana","Escondidinho de Frango",
 "Carne Assada","Rocambole"
 ];
 
-const saladasLista=[
+const saladasLista = [
 "Alface","Tomate","Pepino","Agrião",
 "Macarronese","Cenoura","Beterraba",
 "Repolho","Feijão Fradinho"
 ];
 
-function trocarTela(id){
-document.querySelectorAll(".tela")
-.forEach(t=>t.classList.remove("ativa"));
+/* ===================================================
+   TROCAR TELAS
+=================================================== */
 
-document.getElementById(id).classList.add("ativa");
-window.scrollTo(0,0);
+function trocarTela(id){
+ document.querySelectorAll(".tela")
+ .forEach(t => t.classList.remove("ativa"));
+
+ document.getElementById(id).classList.add("ativa");
+ window.scrollTo(0,0);
 }
 
-// ---------- MONTAGEM ----------
+/* ===================================================
+   MONTAGEM
+=================================================== */
+
 function abrirMontagem(tipo){
-tipoQuentinha=tipo;
-carneExtra=0;
-trocarTela("telaMontagem");
-carregarOpcoes();
+ tipoQuentinha = tipo;
+ trocarTela("telaMontagem");
+ carregarOpcoes();
 }
 
 function carregarOpcoes(){
 
-const carnes=document.getElementById("carnes");
-carnes.innerHTML="<h3>Carnes</h3>";
+ const carnes = document.getElementById("carnes");
+ carnes.innerHTML = "<h3>Carnes</h3>";
 
-carnesLista.forEach(c=>{
-carnes.innerHTML+=`
-<label class="check">
-<input type="checkbox" value="${c}">
-<span>${c}</span>
-</label>`;
-});
+ carnesLista.forEach(c=>{
+   carnes.innerHTML += `
+   <label class="check">
+     <input type="checkbox" class="carne" value="${c}">
+     <span>${c}</span>
+   </label>`;
+ });
 
-const saladas=document.getElementById("saladas");
-saladas.innerHTML="";
+ const saladas = document.getElementById("saladas");
+ saladas.innerHTML="";
 
-saladasLista.forEach(s=>{
-saladas.innerHTML+=`
-<label class="check">
-<input type="checkbox" value="${s}">
-<span>${s}</span>
-</label>`;
-});
+ saladasLista.forEach(s=>{
+   saladas.innerHTML += `
+   <label class="check">
+     <input type="checkbox" value="${s}">
+     <span>${s}</span>
+   </label>`;
+ });
 }
 
-function addCarneExtra(){
-carneExtra++;
-alert("Carne extra adicionada");
-}
+/* ===================================================
+   SACOLA (CARNE +8 AUTOMÁTICO)
+=================================================== */
 
-// ---------- SACOLA ----------
 function adicionarSacola(){
 
-let preco= tipoQuentinha==="P"?18:22;
+ let preco = tipoQuentinha === "P" ? PRECO_P : PRECO_G;
 
-if(document.getElementById("ovo").checked)
-preco+=3;
+ // ovo
+ if(document.getElementById("ovo").checked)
+   preco += PRECO_OVO;
 
-preco+=carneExtra*8;
+ // conta carnes automaticamente
+ const carnesSelecionadas =
+ document.querySelectorAll('.carne:checked').length;
 
-sacola.push({tipo:tipoQuentinha,valor:preco});
+ preco += carnesSelecionadas * PRECO_CARNE_EXTRA;
 
-renderSacola();
-trocarTela("telaSacola");
+ sacola.push({
+   tipo: tipoQuentinha,
+   carnes: carnesSelecionadas,
+   valor: preco
+ });
+
+ renderSacola();
+ trocarTela("telaSacola");
 }
 
 function renderSacola(){
 
-const lista=document.getElementById("itensSacola");
-lista.innerHTML="";
-let total=0;
+ const lista = document.getElementById("itensSacola");
+ lista.innerHTML="";
 
-sacola.forEach((item,i)=>{
+ let total = 0;
 
-lista.innerHTML+=`
-<div class="card sacolaCard">
-<div>
-<b>Quentinha ${item.tipo}</b>
-<p>R$ ${item.valor.toFixed(2)}</p>
-</div>
-<button class="remover" onclick="removerItem(${i})">Remover</button>
-</div>`;
+ sacola.forEach((item,i)=>{
 
-total+=item.valor;
-});
+   lista.innerHTML += `
+   <div class="card sacolaCard">
+     <div>
+       <b>Quentinha ${item.tipo}</b>
+       <p>R$ ${item.valor.toFixed(2)}</p>
+     </div>
+     <button class="remover" onclick="removerItem(${i})">
+       Remover
+     </button>
+   </div>`;
 
-document.getElementById("total").innerText=
-"Total: R$ "+total.toFixed(2);
+   total += item.valor;
+ });
+
+ document.getElementById("total").innerText =
+ "Total: R$ " + total.toFixed(2);
 }
 
 function removerItem(i){
-sacola.splice(i,1);
-renderSacola();
+ sacola.splice(i,1);
+ renderSacola();
 }
 
 function voltarMenu(){
-trocarTela("telaInicial");
+ trocarTela("telaInicial");
 }
 
-// ---------- CLIENTE ----------
+/* ===================================================
+   CLIENTE
+=================================================== */
+
 function abrirCadastro(){
-trocarTela("telaCadastro");
+ trocarTela("telaCadastro");
 }
 
 function salvarCliente(){
 
-const nome=nomeInput("nome");
-const tel=nomeInput("telefone");
+ const nome = nomeInput("nome");
+ const tel = nomeInput("telefone");
 
-if(!nome||!tel){
-alert("Preencha seus dados");
-return;
+ if(!nome || !tel){
+   alert("Preencha seus dados");
+   return;
+ }
+
+ localStorage.setItem("cliente",
+ JSON.stringify({nome,tel}));
+
+ trocarTela("telaEndereco");
 }
 
-localStorage.setItem("cliente",
-JSON.stringify({nome,tel}));
+/* ===================================================
+   ENDEREÇO
+=================================================== */
 
-trocarTela("telaEndereco");
-}
-
-// ---------- ENDEREÇO ----------
 function salvarEndereco(){
 
-const endereco={
-rua:nomeInput("rua"),
-numero:nomeInput("numero"),
-bairro:nomeInput("bairro"),
-referencia:nomeInput("referencia")
-};
+ const endereco = {
+   rua:nomeInput("rua"),
+   numero:nomeInput("numero"),
+   bairro:nomeInput("bairro"),
+   referencia:nomeInput("referencia")
+ };
 
-if(!endereco.rua||!endereco.numero){
-alert("Preencha o endereço");
-return;
+ if(!endereco.rua || !endereco.numero){
+   alert("Preencha o endereço");
+   return;
+ }
+
+ localStorage.setItem("endereco",
+ JSON.stringify(endereco));
+
+ trocarTela("telaPagamento");
 }
 
-localStorage.setItem("endereco",JSON.stringify(endereco));
+/* ===================================================
+   TROCO
+=================================================== */
 
-trocarTela("telaPagamento");
-}
-
-// ---------- PAGAMENTO ----------
 function mostrarTroco(){
-const dinheiro=document.getElementById("pgDinheiro");
-document.getElementById("trocoArea").style.display=
-dinheiro.checked?"block":"none";
+
+ const selecionado =
+ document.querySelector('input[name="pg"]:checked');
+
+ const area = document.getElementById("trocoArea");
+
+ if(selecionado && selecionado.value === "Dinheiro"){
+   area.style.display="block";
+ } else {
+   area.style.display="none";
+   esconderCampoTroco();
+ }
 }
 
-// ---------- FINALIZAR ----------
+function precisaTroco(sim){
+
+ const campo = document.getElementById("troco");
+
+ if(sim){
+   campo.style.display="block";
+ }else{
+   campo.style.display="none";
+   campo.value="";
+ }
+}
+
+function esconderCampoTroco(){
+ const campo = document.getElementById("troco");
+ campo.style.display="none";
+ campo.value="";
+}
+
+/* ===================================================
+   FINALIZAR
+=================================================== */
+
 function finalizarPedido(){
 
-const pagamento=
-document.querySelector('input[name="pg"]:checked');
+ const pagamento =
+ document.querySelector('input[name="pg"]:checked');
 
-if(!pagamento){
-alert("Escolha o pagamento");
-return;
+ if(!pagamento){
+   alert("Escolha o pagamento");
+   return;
+ }
+
+ const pedido = {
+   cliente: JSON.parse(localStorage.getItem("cliente")),
+   endereco: JSON.parse(localStorage.getItem("endereco")),
+   itens: sacola,
+   pagamento: pagamento.value,
+   troco: document.getElementById("troco").value || null
+ };
+
+ console.log("PEDIDO:", pedido);
+
+ alert("Pedido enviado com sucesso!");
+
+ localStorage.clear();
+ location.reload();
 }
 
-const pedido={
-cliente:JSON.parse(localStorage.getItem("cliente")),
-endereco:JSON.parse(localStorage.getItem("endereco")),
-itens:sacola,
-pagamento:pagamento.value
-};
+/* ===================================================
+   HELPERS
+=================================================== */
 
-console.log("PEDIDO:",pedido);
-
-alert("Pedido enviado com sucesso!");
-
-localStorage.clear();
-location.reload();
-}
-
-// helper
 function nomeInput(id){
-return document.getElementById(id).value.trim();
+ const el = document.getElementById(id);
+ return el ? el.value.trim() : "";
 }

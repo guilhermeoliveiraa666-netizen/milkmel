@@ -13,7 +13,7 @@
 <body>
 
 <header class="topo">
-<h1>Restaurante Milk & Mel</h1>
+<img src="./logo.png" class="logo">
 </header>
 
 <main>
@@ -24,6 +24,7 @@
 <h2>Escolha sua quentinha</h2>
 
 <div class="grid">
+
 <div class="card" onclick="abrirMontagem('P')">
 <h3>Quentinha P</h3>
 <p>Ideal para 1 pessoa</p>
@@ -35,8 +36,8 @@
 <p>Fome grande 😄</p>
 <strong>R$ 22,00</strong>
 </div>
-</div>
 
+</div>
 </section>
 
 <!-- MONTAGEM -->
@@ -56,11 +57,7 @@
 <span>Ovo + R$3</span>
 </label>
 
-<div class="contador">
-<button onclick="alterarCarneExtra(-1)">−</button>
-<span id="qtdExtra">0</span>
-<button onclick="alterarCarneExtra(1)">+</button>
-</div>
+
 
 <button class="principal" onclick="adicionarSacola()">
 Adicionar à sacola
@@ -70,42 +67,30 @@ Adicionar à sacola
 
 <!-- SACOLA -->
 <section id="telaSacola" class="tela">
-
 <h2>Sua Sacola</h2>
-
 <div id="itensSacola"></div>
-
 <h3 id="total"></h3>
 
 <button class="secundario" onclick="voltarMenu()">Adicionar mais itens</button>
 <button class="principal" onclick="abrirCadastro()">Avançar</button>
-
 </section>
 
 <!-- CADASTRO -->
 <section id="telaCadastro" class="tela">
-
 <h2>Seus dados</h2>
-
 <input id="nome" placeholder="Seu nome">
 <input id="telefone" placeholder="Celular">
-
 <button class="principal" onclick="salvarCliente()">Continuar</button>
-
 </section>
 
 <!-- ENDEREÇO -->
 <section id="telaEndereco" class="tela">
-
 <h2>Endereço</h2>
-
 <input id="rua" placeholder="Rua">
 <input id="numero" placeholder="Número">
 <input id="bairro" placeholder="Bairro">
 <input id="referencia" placeholder="Referência">
-
 <button class="principal" onclick="salvarEndereco()">Continuar</button>
-
 </section>
 
 <!-- PAGAMENTO -->
@@ -114,20 +99,29 @@ Adicionar à sacola
 <h2>Pagamento</h2>
 
 <label class="check">
-<input type="radio" name="pg" value="Pix"> Pix
+<input type="radio" name="pg" value="Pix" onchange="mostrarTroco()"> Pix
 </label>
 
 <label class="check">
-<input type="radio" name="pg" value="Cartão"> Cartão
+<input type="radio" name="pg" value="Cartão" onchange="mostrarTroco()"> Cartão
 </label>
 
 <label class="check">
-<input type="radio" name="pg" value="Dinheiro" onchange="mostrarTroco(this)">
-Dinheiro
+<input type="radio" name="pg" value="Dinheiro" onchange="mostrarTroco()"> Dinheiro
 </label>
 
+<!-- TROCO CORRETO -->
 <div id="trocoArea" class="troco">
-<input id="troco" placeholder="Troco para quanto?">
+
+<p>Precisa de troco?</p>
+
+<div class="trocoBtns">
+<button type="button" onclick="precisaTroco(true)">Sim</button>
+<button type="button" onclick="precisaTroco(false)">Não</button>
+</div>
+
+<input id="troco" placeholder="Troco para quanto?" style="display:none;">
+
 </div>
 
 <button class="principal" onclick="finalizarPedido()">
