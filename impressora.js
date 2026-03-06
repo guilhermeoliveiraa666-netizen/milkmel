@@ -1,7 +1,7 @@
 const { ThermalPrinter, PrinterTypes } = require("node-thermal-printer");async function imprimirPedido(pedido) {
 
-  const printer = new ThermalPrinter({
-    type: PrinterTypes.EPSON,
+  const printer =({
+    type:POS80  ,
     interface: "printer:auto",
     options: { timeout: 5000 }
   });
