@@ -807,3 +807,81 @@ font-size:12px;
 }
 
 }
+
+/* ========================= */
+/* RESPONSIVO PARA CELULAR   */
+/* ========================= */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 0;
+    margin: 0;
+    background: #f5f5f5;
+  }
+
+  .container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  h1, h2, h3 {
+    text-align: center;
+  }
+
+  /* Logo restaurante */
+  .logo {
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    display: block;
+  }
+
+  /* Card do restaurante */
+  .restaurant-info {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  /* Inputs */
+  input {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  /* Botão continuar */
+  button {
+    width: 100%;
+    padding: 18px;
+    font-size: 18px;
+    border-radius: 14px;
+    font-weight: bold;
+  }
+
+  /* Cards das quentinhas */
+  .card {
+    width: 100%;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+  }
+
+  /* Título quentinha */
+  .card h3 {
+    font-size: 20px;
+  }
+
+  /* Texto descrição */
+  .card p {
+    font-size: 15px;
+  }
+
+  /* Espaço entre seções */
+  section {
+    margin-bottom: 20px;
+  }
+
+}
