@@ -555,7 +555,7 @@ function selecionarEntrega(tipo, botao){
   };
 
 
-  fetch("/pedido",{
+  fetch("https://nonperceptible-nonpredatory-chaim.ngrok-free.dev/pedido",{
 
     method:"POST",
 
