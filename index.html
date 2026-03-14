@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurante Milk & Mel</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- TOPO / TELA INICIAL -->
+<div class="topo-inicial">
+  <div class="banner">
+    <img src="/images/banner.jpg" alt="Banner">
+  </div>
+
+  <div class="perfil-inicial">
+    <div class="logo-loja">
+      <img src="/images/logo.png" alt="Logo">
+    </div>
+
+    <h1 class="nome-loja">Milk & Mel</h1>
+    <p class="cidade">Seropédica</p>
+
+    <div class="infos">
+      <div class="info">
+        <span>Pedidos</span>
+        <strong>11:20 - 13:20</strong>
+      </div>
+      <div class="info">
+        <span>Entrega</span>
+        <strong>60 - 90 min</strong>
+      </div>
+      <div class="info">
+        <span>Pedido mínimo</span>
+        <strong>Sem valor mínimo</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TELA INICIAL: ESCOLHA DA QUENTINHA -->
+<section id="telaInicial" class="tela ativa">
+  <h2>Escolha sua quentinha</h2>
+
+  <div class="grid">
+    <div class="card" onclick="abrirMontagem('P')">
+     <h3>Quentinha P</h3>
+<p>1 pedaço de carne + arroz, feijão, macarrão e farofa</p>
+<p>Inclui: 3 opções de salada + 1 acompanhamento extra</p>
+<strong>R$ 18,00</strong>
+    </div>
+
+    <div class="card" onclick="abrirMontagem('G')">
+      <h3>Quentinha G</h3>
+<p>2 pedaços de carne + arroz, feijão, macarrão e farofa</p>
+<p>Inclui: 3 opções de salada + 2 acompanhamentos extras</p>
+<strong>R$ 22,00</strong>
+    </div>
+  </div>
+</section>
+
+<!-- TELA DE MONTAGEM -->
+<section id="telaMontagem" class="tela">
+  <h2>Monte sua quentinha</h2>
+
+  <h3>Carnes</h3>
+  <div id="carnes"></div>
+
+  <h3>Salada (Escolha até 3 opções)</h3>
+  <div id="saladas"></div>
+
+  <!-- ACOMPANHAMENTOS INCLUSOS -->
+<!-- ACOMPANHAMENTOS INCLUSOS -->
+<div id="acompInclusos">
+
+  <h3>Acompanhamentos já inclusos</h3>
+
+  <!-- ARROZ -->
+  <p class="subtitulo">Escolha seu arroz:</p>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Branco</span>
+    </div>
+    <input type="radio" name="arroz" value="Branco">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Integral</span>
+    </div>
+    <input type="radio" name="arroz" value="Integral">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Sem Arroz</span>
+    </div>
+    <input type="radio" name="arroz" value="Sem Arroz">
+    <span class="radio-custom"></span>
+  </label>
+
+
+  <!-- FEIJÃO -->
+  <p class="subtitulo">Escolha seu feijão:</p>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Preto</span>
+    </div>
+    <input type="radio" name="feijao" value="Preto">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Mulatinho</span>
+    </div>
+    <input type="radio" name="feijao" value="Mulatinho">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Sem Feijão</span>
+    </div>
+    <input type="radio" name="feijao" value="Sem Feijão">
+    <span class="radio-custom"></span>
+  </label>
+
+
+  <!-- MACARRÃO -->
+  <p class="subtitulo">Macarrão:</p>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Molho de Tomate</span>
+    </div>
+    <input type="radio" name="macarrao" value="Molho de Tomate">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Alho e Óleo</span>
+    </div>
+    <input type="radio" name="macarrao" value="Alho e Óleo">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Sem Macarrão</span>
+    </div>
+    <input type="radio" name="macarrao" value="Sem Macarrão">
+    <span class="radio-custom"></span>
+  </label>
+
+
+  <!-- FAROFA -->
+  <p class="subtitulo">Farofa:</p>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Com Farofa</span>
+    </div>
+    <input type="radio" name="farofa" value="Com Farofa">
+    <span class="radio-custom"></span>
+  </label>
+
+  <label class="opcao-cardapio">
+    <div class="opcao-info">
+      <span class="opcao-titulo">Sem Farofa</span>
+    </div>
+    <input type="radio" name="farofa" value="Sem Farofa">
+    <span class="radio-custom"></span>
+  </label>
+
+</div>
+  <h3>Acompanhamentos (Extras)</h3>
+  <div id="acompExtra"></div>
+
+  <h3>Observação</h3>
+  <input id="obs" placeholder="Escreva aqui se quiser algo especial">
+
+  <button class="principal" onclick="adicionarSacola()">Adicionar à sacola</button>
+</section>
+
+<!-- SACOLA -->
+<section id="telaSacola" class="tela">
+  <h2>Sua Sacola</h2>
+  <div id="itensSacola"></div>
+  <h3 id="total"></h3>
+
+  <button class="secundario" onclick="trocarTela('telaInicial')">Adicionar mais itens</button>
+  <button class="principal" onclick="abrirCadastro()">Avançar</button>
+</section>
+
+<!-- CADASTRO -->
+<section id="telaCadastro" class="tela">
+  <h2>Seus dados</h2>
+  <input id="nome" placeholder="Seu nome">
+  <input id="telefone" placeholder="Celular">
+  <button class="principal" onclick="salvarCliente()">Continuar</button>
+</section>
+
+<!-- ===============================
+SUB TELA - ENTREGA OU RETIRADA
+=============================== -->
+<section id="telaTipoEntrega" class="tela">
+
+  <h2>Como deseja receber?</h2>
+
+  <div class="grid">
+
+    <div class="card" onclick="escolherEntrega('entrega')">
+      <h3>🚚 Entrega</h3>
+      <p>Receba no seu endereço</p>
+    </div>
+
+    <div class="card" onclick="escolherEntrega('retirada')">
+      <h3>🏪 Retirada na loja</h3>
+      <p>Buscar no balcão</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ENDEREÇO -->
+<section id="telaTipoEntrega" class="tela">
+
+<h2>Como deseja receber?</h2>
+
+<div class="grid">
+
+<div class="card" onclick="escolherEntrega('entrega')">
+🚚 Entrega
+</div>
+
+<div class="card" onclick="escolherEntrega('retirada')">
+🏪 Retirar na loja
+</div>
+
+</div>
+
+</section>
+
+<section id="telaEndereco" class="tela">
+
+<h2>Endereço</h2>
+
+<div id="areaEndereco">
+
+<input id="rua" placeholder="Rua">
+<input id="numero" placeholder="Número">
+<input id="bairro" placeholder="Bairro">
+<input id="referencia" placeholder="Referência">
+
+</div>
+
+<button class="principal" onclick="salvarEndereco()">Continuar</button>
+
+</section>
+
+<!-- PAGAMENTO -->
+<section id="telaPagamento" class="tela">
+  <h2>Pagamento</h2>
+
+  <label class="check">
+    <input type="radio" name="pg" value="Pix" onchange="mostrarTroco()"> Pix
+  </label>
+
+  <label class="check">
+    <input type="radio" name="pg" value="Cartão" onchange="mostrarTroco()"> Cartão
+  </label>
+
+  <label class="check">
+    <input type="radio" name="pg" value="Dinheiro" onchange="mostrarTroco()"> Dinheiro
+  </label>
+
+  <div id="trocoArea" class="troco">
+    <p>Precisa de troco?</p>
+    <div class="trocoBtns">
+      <button type="button" onclick="precisaTroco(true)">Sim</button>
+      <button type="button" onclick="precisaTroco(false)">Não</button>
+    </div>
+    <input id="troco" placeholder="Troco para quanto?" style="display:none;">
+  </div>
+
+  <button class="principal" onclick="finalizarPedido()">Finalizar Pedido</button>
+</section>
+
+<!-- INCLUIR O SCRIPT *APENAS AQUI NO FINAL* -->
+<script src="/script.js"></script>
+</body>
+</html>
