@@ -1,0 +1,809 @@
+/* ======================
+   RESET
+====================== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background: #f2f2f2;
+}
+
+/* ======================
+   TOPO LOJA (TELA INICIAL)
+====================== */
+.topo-inicial {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner {
+  width: 100%;
+  height: 180px; /* ou a altura do banner que você definiu */
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-loja {
+  width: 70px;
+  height: 70px;
+  border-radius: 15px;
+  border: 4px solid white;
+  margin-top: -35px; /* sobe sobre o banner */
+  overflow: hidden;
+  background: white;
+}
+
+.logo-loja img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dados-loja {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.infos {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.telaInicial .info {
+  text-align: center;
+  flex: 1;
+  font-size: 13px;
+}
+
+.telaInicial .info strong {
+  display: block;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ======================
+   TELAS E CONTEÚDO
+====================== */
+.tela {
+  display: none;
+  padding: 20px;
+  max-width: 520px;
+  margin: auto;
+}
+
+.tela.ativa {
+  display: block;
+}
+
+/* ======================
+   MAIN (ajusta para topo fixo)
+====================== */
+main {
+  padding-top: 250px; /* Altura do topo inicial + banner */
+  max-width: 520px;
+  margin: auto;
+}
+
+/* ======================
+   GRID E CARTÕES
+====================== */
+.grid {
+  display: grid;
+  gap: 14px;
+}
+
+.card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  text-align: center;
+}
+
+.card p {
+  margin: 8px 0 12px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ===== ESTILO DAS OPÇÕES DE MONTAGEM ===== */
+.telaMontagem .check {
+  background:white;
+  padding:12px 14px;
+  margin:8px 0;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);
+  display:flex;
+  align-items:center;
+  justify-content:center; /* centraliza o texto */
+  gap:10px;
+}
+
+.telaMontagem .check span {
+  font-size:14px;
+  color:#555;
+  text-align:center; /* centraliza o texto dentro do check */
+  line-height:1.4;
+}
+
+/* ======================
+   CHECKBOX / INPUTS
+====================== */
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+/* ======================
+   BOTÕES
+====================== */
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.principal {
+  width: 100%;
+  background: #ea1d2c;
+  color: white;
+}
+
+.secundario {
+  width: 100%;
+  background: #fff;
+  border: 2px solid #ea1d2c;
+  color: #ea1d2c;
+  margin-top: 10px;
+}
+
+/* ======================
+   SACOLA / CONTADOR / TROCO
+====================== */
+.contador {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.contador button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  background: #eee;
+}
+
+#trocoArea {
+  display: none;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.trocoBtns {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.trocoBtns button {
+  flex: 1;
+  background: #eee;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ======================
+   RESPONSIVO
+====================== */
+@media (max-width: 600px) {
+  main {
+    padding-top: 200px; /* ajusta topo no celular */
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .telaInicial .logo-loja {
+    top: 120px;
+    left: 15px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .telaInicial .dados-loja {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 520px) {
+  .banner {
+    height: 150px;
+  }
+
+  .logo-loja {
+    width: 60px;
+    height: 60px;
+    margin-top: -30px;
+  }
+
+  .dados-loja h1 {
+    font-size: 18px;
+  }
+
+  .infos {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+/* TOPO DELIVERY */
+
+.topo-loja{
+width:100%;
+position:relative;
+}
+
+.banner{
+width:100%;
+height:180px;
+overflow:hidden;
+}
+
+.banner-img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.caixa-loja{
+width:92%;
+max-width:900px;
+background:white;
+margin:-60px auto 20px auto;
+border-radius:16px;
+padding:20px;
+box-shadow:0 4px 20px rgba(0,0,0,0.1);
+display:flex;
+gap:20px;
+align-items:center;
+}
+
+.logo-loja img{
+width:70px;
+height:70px;
+border-radius:12px;
+object-fit:cover;
+}
+
+.dados-loja h1{
+font-size:20px;
+margin:0;
+}
+
+.endereco{
+color:#777;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.infos{
+display:flex;
+justify-content:space-between;
+background:#f5f5f5;
+border-radius:12px;
+padding:12px;
+gap:10px;
+}
+
+.info{
+text-align:center;
+flex:1;
+}
+
+.info span{
+display:block;
+font-size:12px;
+color:#666;
+}
+
+.info strong{
+font-size:14px;
+}
+
+.opcoes {
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  margin:10px 0;
+  text-align:center;
+}
+
+.opcoes h3 {
+  margin-bottom:10px;
+}
+
+.opcoes label {
+  display:block;
+  margin:5px 0;
+  font-size:14px;
+}
+
+#observacao textarea {
+  width:100%;
+  border-radius:10px;
+  border:1px solid #ddd;
+  padding:10px;
+  margin-top:5px;
+  resize:none;
+}
+
+.cards-acomp {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cards-acomp h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-acomp {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-acomp:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-acomp.ativo {
+  background-color: #ff7f50;
+  color: white;
+  border-color: #ff7f50;
+}
+
+/* ===============================
+BOTÕES PADRÃO CARDÁPIO (NOVO)
+=============================== */
+
+.opcao-cardapio{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#f6f6f6;
+  border-radius:18px;
+  padding:16px 18px;
+  margin:10px 0;
+  cursor:pointer;
+  transition:.2s;
+  border:2px solid transparent;
+}
+
+.opcao-cardapio:hover{
+  background:#eeeeee;
+}
+
+.opcao-cardapio input{
+  display:none;
+}
+
+.opcao-info{
+  display:flex;
+  flex-direction:column;
+}
+
+.opcao-titulo{
+  font-weight:600;
+  font-size:15px;
+}
+
+.opcao-extra{
+  font-size:13px;
+  color:#777;
+}
+
+.radio-custom{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid #bbb;
+  position:relative;
+}
+
+.opcao-cardapio input:checked + .radio-custom{
+  border-color:#ff7a00;
+}
+
+.opcao-cardapio input:checked + .radio-custom::after{
+  content:"";
+  width:10px;
+  height:10px;
+  background:#ff7a00;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+/* ===============================
+RESPONSIVO MOBILE
+=============================== */
+
+@media(max-width:480px){
+
+  body{
+    font-size:15px;
+  }
+
+  .tela{
+    padding:16px;
+  }
+
+  h2{
+    font-size:20px;
+    text-align:center;
+  }
+
+  h3{
+    text-align:center;
+    margin-top:25px;
+  }
+
+  .opcao-cardapio{
+    padding:14px;
+    border-radius:16px;
+  }
+
+}
+
+.tela {
+  display: none;
+}
+
+.tela.ativa {
+  display: block;
+}
+
+.topo-inicial{
+width:100%;
+position:relative;
+}
+
+/* banner */
+
+.banner img{
+width:100%;
+height:140px;
+object-fit:cover;
+}
+
+/* card branco */
+
+.perfil-inicial{
+
+width:92%;
+max-width:600px;
+
+background:white;
+
+margin:-50px auto 0 auto;
+
+border-radius:18px;
+
+padding:20px;
+
+text-align:center;
+
+box-shadow:0 6px 20px rgba(0,0,0,0.08);
+
+}
+
+/* logo */
+
+.logo-loja{
+
+width:70px;
+height:70px;
+
+margin:-60px auto 10px auto;
+
+border-radius:16px;
+
+overflow:hidden;
+
+background:white;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+}
+
+.logo-loja img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* nome */
+
+.nome-loja{
+margin:0;
+font-size:22px;
+font-weight:700;
+}
+
+/* cidade */
+
+.cidade{
+font-size:14px;
+color:#777;
+margin-top:4px;
+}
+
+/* infos */
+
+.infos{
+
+display:flex;
+
+margin-top:15px;
+
+border:1px solid #eee;
+
+border-radius:12px;
+
+overflow:hidden;
+
+}
+
+.info{
+
+flex:1;
+
+padding:10px;
+
+font-size:13px;
+
+border-right:1px solid #eee;
+
+}
+
+.info:last-child{
+border-right:none;
+}
+
+.info span{
+display:block;
+color:#777;
+font-size:12px;
+}
+
+.info strong{
+font-size:13px;
+}
+
+/* celular */
+
+@media (max-width:600px){
+
+.banner img{
+height:120px;
+}
+
+.perfil-inicial{
+width:94%;
+padding:18px;
+}
+
+.nome-loja{
+font-size:20px;
+}
+
+}
+
+/* ===== TOPO RESPONSIVO ===== */
+
+.topo-inicial{
+width:100%;
+position:relative;
+}
+
+/* banner */
+
+.banner{
+width:100%;
+height:140px;
+overflow:hidden;
+}
+
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+/* card da loja */
+
+.perfil-inicial{
+
+width:92%;
+max-width:520px;
+
+background:#fff;
+
+margin:-50px auto 0 auto;
+
+border-radius:18px;
+
+padding:20px;
+
+text-align:center;
+
+box-shadow:0 8px 24px rgba(0,0,0,0.08);
+
+position:relative;
+
+}
+
+/* logo */
+
+.logo-loja{
+
+width:70px;
+height:70px;
+
+margin:-55px auto 10px auto;
+
+border-radius:16px;
+
+overflow:hidden;
+
+background:white;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+
+}
+
+.logo-loja img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+
+}
+
+/* nome */
+
+.nome-loja{
+margin:0;
+font-size:22px;
+font-weight:700;
+}
+
+/* cidade */
+
+.cidade{
+font-size:14px;
+color:#777;
+margin-top:4px;
+}
+
+/* infos */
+
+.infos{
+
+display:flex;
+
+margin-top:16px;
+
+border:1px solid #eee;
+
+border-radius:12px;
+
+overflow:hidden;
+
+}
+
+.info{
+
+flex:1;
+
+padding:10px;
+
+font-size:13px;
+
+border-right:1px solid #eee;
+
+}
+
+.info:last-child{
+border-right:none;
+}
+
+.info span{
+display:block;
+font-size:12px;
+color:#777;
+}
+
+.info strong{
+font-size:13px;
+}
+
+/* ===== RESPONSIVO CELULAR ===== */
+
+@media (max-width:600px){
+
+.banner{
+height:120px;
+}
+
+.perfil-inicial{
+width:94%;
+padding:18px;
+margin-top:-45px;
+}
+
+.logo-loja{
+width:60px;
+height:60px;
+}
+
+.nome-loja{
+font-size:19px;
+}
+
+.infos{
+font-size:12px;
+}
+
+}
